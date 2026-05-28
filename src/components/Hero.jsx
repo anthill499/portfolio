@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { FadeInSection } from "./FadeInSection";
 
 const phrases = [
-  { line1: "Anthony", line2: "Huang",    swap1: 1, swap2: 3 }, // 'n'
+  { line1: "Anthony", line2: "Huang", swap1: 1, swap2: 3 }, // 'n'
   { line1: "Software", line2: "Engineer", swap1: 7, swap2: 5 }, // 'e'
-  { line1: "Problem",  line2: "Solver",   swap1: 5, swap2: 4 }, // 'e'
+  { line1: "Problem", line2: "Solver", swap1: 5, swap2: 4 }, // 'e'
 ];
 
 function TypedLine({ text, offset, swapCharIdx, swapRef }) {
@@ -26,7 +26,16 @@ function TypedLine({ text, offset, swapCharIdx, swapRef }) {
 
 function PinIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
       <circle cx="12" cy="10" r="3" />
     </svg>
@@ -35,7 +44,16 @@ function PinIcon() {
 
 function MailIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
     </svg>
@@ -67,9 +85,17 @@ function LeetCodeIcon() {
 }
 
 const socialLinks = [
-  { label: "GitHub",   href: "https://github.com/anthill499",           Icon: GitHubIcon   },
-  { label: "LinkedIn", href: "https://linkedin.com/in/anthonyhuang499", Icon: LinkedInIcon },
-  { label: "LeetCode", href: "https://leetcode.com/anthill499",          Icon: LeetCodeIcon },
+  { label: "GitHub", href: "https://github.com/anthill499", Icon: GitHubIcon },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/anthonyhuang499",
+    Icon: LinkedInIcon,
+  },
+  {
+    label: "LeetCode",
+    href: "https://leetcode.com/anthill499",
+    Icon: LeetCodeIcon,
+  },
 ];
 
 export function Hero() {
@@ -81,47 +107,55 @@ export function Hero() {
     const timers = [];
 
     // Step 1 — remove char-appear (releases its opacity:0 rule) then highlight red
-    timers.push(setTimeout(() => {
-      const el1 = char1Ref.current;
-      const el2 = char2Ref.current;
-      el1?.classList.remove("char-appear");
-      el2?.classList.remove("char-appear");
-      el1?.classList.add("char-red");
-      el2?.classList.add("char-red");
-    }, 1200));
+    timers.push(
+      setTimeout(() => {
+        const el1 = char1Ref.current;
+        const el2 = char2Ref.current;
+        el1?.classList.remove("char-appear");
+        el2?.classList.remove("char-appear");
+        el1?.classList.add("char-red");
+        el2?.classList.add("char-red");
+      }, 1200),
+    );
 
     // Step 2 — animate the swap
-    timers.push(setTimeout(() => {
-      const el1 = char1Ref.current;
-      const el2 = char2Ref.current;
-      if (!el1 || !el2) return;
+    timers.push(
+      setTimeout(() => {
+        const el1 = char1Ref.current;
+        const el2 = char2Ref.current;
+        if (!el1 || !el2) return;
 
-      const r1 = el1.getBoundingClientRect();
-      const r2 = el2.getBoundingClientRect();
+        const r1 = el1.getBoundingClientRect();
+        const r2 = el2.getBoundingClientRect();
 
-      el1.style.setProperty("--swap-dx", `${r2.left - r1.left}px`);
-      el1.style.setProperty("--swap-dy", `${r2.top  - r1.top}px`);
-      el2.style.setProperty("--swap-dx", `${r1.left - r2.left}px`);
-      el2.style.setProperty("--swap-dy", `${r1.top  - r2.top}px`);
+        el1.style.setProperty("--swap-dx", `${r2.left - r1.left}px`);
+        el1.style.setProperty("--swap-dy", `${r2.top - r1.top}px`);
+        el2.style.setProperty("--swap-dx", `${r1.left - r2.left}px`);
+        el2.style.setProperty("--swap-dy", `${r1.top - r2.top}px`);
 
-      el1.classList.add("char-swap-active");
-      el2.classList.add("char-swap-active");
-    }, 1800));
+        el1.classList.add("char-swap-active");
+        el2.classList.add("char-swap-active");
+      }, 1800),
+    );
 
     // Step 3 — glow dissolve back to original color
-    timers.push(setTimeout(() => {
-      const el1 = char1Ref.current;
-      const el2 = char2Ref.current;
-      el1?.classList.remove("char-red");
-      el2?.classList.remove("char-red");
-      el1?.classList.add("char-glow-dissolve");
-      el2?.classList.add("char-glow-dissolve");
-    }, 2450));
+    timers.push(
+      setTimeout(() => {
+        const el1 = char1Ref.current;
+        const el2 = char2Ref.current;
+        el1?.classList.remove("char-red");
+        el2?.classList.remove("char-red");
+        el1?.classList.add("char-glow-dissolve");
+        el2?.classList.add("char-glow-dissolve");
+      }, 2450),
+    );
 
     // Step 4 — advance to next phrase
-    timers.push(setTimeout(() => {
-      setIdx(prev => (prev + 1) % phrases.length);
-    }, 4200));
+    timers.push(
+      setTimeout(() => {
+        setIdx((prev) => (prev + 1) % phrases.length);
+      }, 4200),
+    );
 
     return () => timers.forEach(clearTimeout);
   }, [idx]);
@@ -153,8 +187,8 @@ export function Hero() {
             />
           </h1>
           <p className="mt-8 text-lg text-[#6B6B6B] dark:text-[#9B9B9B] max-w-md leading-relaxed">
-            I build thoughtful software products that people enjoy using.
-            Currently exploring the intersection of great design and engineering.
+            My philosophy with software design is that people should enjoy using
+            it and have a smooth experience as well.
           </p>
 
           <div className="mt-8 space-y-4">

@@ -20,6 +20,14 @@ body {
   margin: 0;
 }
 
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .dot-grid {
   background-image: radial-gradient(
     circle,
@@ -69,8 +77,8 @@ body {
 }
 
 .char-red {
-  color: #ef4444;
-  transition: color 0.35s ease;
+  color: #e0a0a0;
+  transition: color 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .char-swap-active {
@@ -90,18 +98,13 @@ body {
 }
 
 @keyframes glow-dissolve {
-  0% {
-    color: #ef4444;
-    /* text-shadow: 0 0 0px rgba(239, 68, 68, 0); */
-  }
-  25% {
-    color: #ef4444;
-  }
-  100% {
-    color: inherit;
-  }
+  0%   { color: #e0a0a0; }
+  15%  { color: #e8b0b0; }
+  40%  { color: #e8c4c4; }
+  70%  { color: #ead4d4; }
+  100% { color: inherit; }
 }
 
 .char-glow-dissolve {
-  animation: glow-dissolve 1s ease-out forwards;
+  animation: glow-dissolve 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }

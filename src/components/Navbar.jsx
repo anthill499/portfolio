@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { ThemeToggle } from './ThemeToggle'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Resume', href: '#resume' },
-  { label: 'Projects', href: '#projects' },
+  { label: 'About',      href: '#about'     },
+  { label: 'Experience', href: '#resume'     },
+  { label: 'Education',  href: '#education'  },
+  { label: 'Projects',   href: '#projects'   },
 ]
 
 export function Navbar({ isDark, toggleDark }) {

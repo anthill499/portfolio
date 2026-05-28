@@ -1,18 +1,4 @@
-const chipColors = {
-  purple: 'bg-[#EDE9FE] dark:bg-[#2D1B69] text-[#6D28D9] dark:text-[#A78BFA]',
-  blue:   'bg-[#DBEAFE] dark:bg-[#1E3A5F] text-[#1D4ED8] dark:text-[#60A5FA]',
-  green:  'bg-[#D1FAE5] dark:bg-[#064E3B] text-[#065F46] dark:text-[#34D399]',
-  orange: 'bg-[#FEF3C7] dark:bg-[#451A03] text-[#92400E] dark:text-[#FCD34D]',
-  red:    'bg-[#FEE2E2] dark:bg-[#450A0A] text-[#B91C1C] dark:text-[#FCA5A5]',
-  gray:   'bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#374151] dark:text-[#9B9B9B]',
-}
-
-const techColorMap = {
-  React: 'blue', TypeScript: 'blue', JavaScript: 'orange',
-  'Node.js': 'green', 'WebSockets': 'green', PostgreSQL: 'blue',
-  Python: 'green', Click: 'gray', Jinja2: 'gray',
-  'D3.js': 'orange', Redis: 'red', Docker: 'blue',
-}
+import { chipColors, techColorMap } from '../utils/colors'
 
 export function ProjectCard({ title, description, techStack, githubUrl, demoUrl, emoji, headerColor }) {
   const headerBg = {
