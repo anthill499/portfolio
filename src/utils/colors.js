@@ -1,23 +1,20 @@
 // Chip/tag color classes keyed by color name.
-// Use chipColors[color] to get the Tailwind classes for a colored pill.
+// Each entry includes bg, text, and border so chips look like bordered badges.
 export const chipColors = {
-  // -- Existing --
-  purple: 'bg-[#EDE9FE] dark:bg-[#2D1B69] text-[#6D28D9] dark:text-[#A78BFA]',
-  blue:   'bg-[#DBEAFE] dark:bg-[#1E3A5F] text-[#1D4ED8] dark:text-[#60A5FA]',
-  green:  'bg-[#D1FAE5] dark:bg-[#064E3B] text-[#065F46] dark:text-[#34D399]',
-  orange: 'bg-[#FEF3C7] dark:bg-[#451A03] text-[#92400E] dark:text-[#FCD34D]',
-  red:    'bg-[#FEE2E2] dark:bg-[#450A0A] text-[#B91C1C] dark:text-[#FCA5A5]',
-  gray:   'bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#374151] dark:text-[#9B9B9B]',
-
-  // -- New --
-  yellow: 'bg-[#FEF9C3] dark:bg-[#422006] text-[#854D0E] dark:text-[#FDE047]',
-  pink:   'bg-[#FCE7F3] dark:bg-[#500724] text-[#9D174D] dark:text-[#F9A8D4]',
-  teal:   'bg-[#CCFBF1] dark:bg-[#042F2E] text-[#0F766E] dark:text-[#5EEAD4]',
-  indigo: 'bg-[#E0E7FF] dark:bg-[#1E1B4B] text-[#3730A3] dark:text-[#A5B4FC]',
-  brown:  'bg-[#F5EFE8] dark:bg-[#1C1917] text-[#78350F] dark:text-[#D4B896]',
-  lime:   'bg-[#ECFCCB] dark:bg-[#1A2E05] text-[#3F6212] dark:text-[#BEF264]',
-  sky:    'bg-[#E0F2FE] dark:bg-[#082F49] text-[#0369A1] dark:text-[#7DD3FC]',
-  black:  'bg-[#F3F4F6] dark:bg-[#111111] text-[#111111] dark:text-[#E5E7EB]',
+  purple: 'bg-[#F5F3FF] dark:bg-[#1E1547] text-[#5B21B6] dark:text-[#A78BFA] border border-[#DDD6FE] dark:border-[#3B1F8A]',
+  blue:   'bg-[#EFF6FF] dark:bg-[#0F2348] text-[#1D4ED8] dark:text-[#60A5FA] border border-[#BFDBFE] dark:border-[#1E3A5F]',
+  green:  'bg-[#F0FDF4] dark:bg-[#052E16] text-[#166534] dark:text-[#4ADE80] border border-[#BBF7D0] dark:border-[#14532D]',
+  orange: 'bg-[#FFFBEB] dark:bg-[#1C0A00] text-[#92400E] dark:text-[#FCD34D] border border-[#FDE68A] dark:border-[#451A03]',
+  red:    'bg-[#FFF5F5] dark:bg-[#1A0505] text-[#B91C1C] dark:text-[#FCA5A5] border border-[#FECACA] dark:border-[#450A0A]',
+  gray:   'bg-[#F9FAFB] dark:bg-[#1F2937] text-[#374151] dark:text-[#9CA3AF] border border-[#E5E7EB] dark:border-[#374151]',
+  yellow: 'bg-[#FEFCE8] dark:bg-[#1A0E00] text-[#854D0E] dark:text-[#FDE047] border border-[#FEF08A] dark:border-[#422006]',
+  pink:   'bg-[#FDF2F8] dark:bg-[#1A0510] text-[#9D174D] dark:text-[#F9A8D4] border border-[#FBCFE8] dark:border-[#500724]',
+  teal:   'bg-[#F0FDFA] dark:bg-[#011F1E] text-[#0F766E] dark:text-[#5EEAD4] border border-[#99F6E4] dark:border-[#042F2E]',
+  indigo: 'bg-[#EEF2FF] dark:bg-[#0D0C2B] text-[#3730A3] dark:text-[#A5B4FC] border border-[#C7D2FE] dark:border-[#1E1B4B]',
+  brown:  'bg-[#FAFAF9] dark:bg-[#0D0B09] text-[#78350F] dark:text-[#D4B896] border border-[#E7E5E4] dark:border-[#292524]',
+  lime:   'bg-[#F7FEE7] dark:bg-[#0A1300] text-[#3F6212] dark:text-[#BEF264] border border-[#D9F99D] dark:border-[#1A2E05]',
+  sky:    'bg-[#F0F9FF] dark:bg-[#020F1E] text-[#0369A1] dark:text-[#7DD3FC] border border-[#BAE6FD] dark:border-[#082F49]',
+  black:  'bg-[#F9FAFB] dark:bg-[#0A0A0A] text-[#111111] dark:text-[#E5E7EB] border border-[#E5E7EB] dark:border-[#333333]',
 }
 
 // Status/employment-type tag colors — delegates to chipColors so they stay in sync.
@@ -39,7 +36,6 @@ export const tagColors = {
 }
 
 // Maps technology names to their chip color key.
-// Add new techs here as the projects section grows.
 export const techColorMap = {
   React:        'blue',
   TypeScript:   'blue',

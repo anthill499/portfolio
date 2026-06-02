@@ -2,7 +2,7 @@ export function ThemeToggle({ isDark, toggleDark }) {
   return (
     <button
       onClick={toggleDark}
-      className="p-2 rounded-md text-[#6B6B6B] dark:text-[#9B9B9B] hover:text-[#191919] dark:hover:text-[#F7F6F3] hover:bg-[#F7F6F3] dark:hover:bg-[#2F2F2F] transition-colors"
+      className="p-2 rounded-md text-[#6B6B6B] dark:text-[#9B9B9B] hover:text-[#191919] dark:hover:text-[#F7F6F3] hover:bg-[#edecea] dark:hover:bg-[#2a2a2a] transition-colors"
       aria-label="Toggle theme"
     >
       {isDark ? (

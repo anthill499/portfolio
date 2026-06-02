@@ -1,26 +1,36 @@
 import { chipColors, techColorMap } from '../utils/colors'
 
+const accentStyles = {
+  violet: {
+    stripe:  'bg-[#7C3AED]',
+    iconBox: 'bg-[#F5F3FF] dark:bg-[#2D1B69]',
+  },
+  teal: {
+    stripe:  'bg-[#0D9488]',
+    iconBox: 'bg-[#F0FDFA] dark:bg-[#042F2E]',
+  },
+  amber: {
+    stripe:  'bg-[#D97706]',
+    iconBox: 'bg-[#FFFBEB] dark:bg-[#451A03]',
+  },
+}
+
 export function ProjectCard({ title, description, techStack, githubUrl, demoUrl, emoji, headerColor }) {
-  const headerBg = {
-    violet: 'bg-[#7C3AED]',
-    teal:   'bg-[#0D9488]',
-    amber:  'bg-[#D97706]',
-  }
+  const accent = accentStyles[headerColor] ?? accentStyles.violet
 
   return (
-    <div className="border border-[#E9E9E7] dark:border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-[#242424] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 h-full">
-      <div className={`${headerBg[headerColor]} px-6 py-5 flex items-center justify-between`}>
-        <span className="text-2xl select-none">{emoji}</span>
-        <div className="flex gap-2">
-          <div className="w-2 h-2 rounded-full bg-white/30" />
-          <div className="w-2 h-2 rounded-full bg-white/30" />
-          <div className="w-2 h-2 rounded-full bg-white/30" />
-        </div>
-      </div>
+    <div className="border border-[#E9E9E7] dark:border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col bg-[#ffffff] dark:bg-[#242424] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 h-full">
+      {/* Thin accent stripe */}
+      <div className={`h-[3px] w-full ${accent.stripe}`} />
 
-      <div className="p-6 flex flex-col gap-4 flex-1">
+      <div className="p-6 flex flex-col gap-5 flex-1">
+        {/* Emoji icon */}
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl select-none ${accent.iconBox}`}>
+          {emoji}
+        </div>
+
         <div className="flex-1">
-          <h3 className="font-bold text-[#191919] dark:text-[#F7F6F3] text-base">{title}</h3>
+          <h3 className="font-bold text-[#191919] dark:text-[#F7F6F3] text-base leading-snug">{title}</h3>
           <p className="mt-2 text-sm text-[#6B6B6B] dark:text-[#9B9B9B] leading-relaxed">
             {description}
           </p>
@@ -30,7 +40,7 @@ export function ProjectCard({ title, description, techStack, githubUrl, demoUrl,
           {techStack.map(tech => (
             <span
               key={tech}
-              className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${chipColors[techColorMap[tech] ?? 'gray']}`}
+              className={`px-2 py-0.5 rounded-md text-xs font-medium ${chipColors[techColorMap[tech] ?? 'gray']}`}
             >
               {tech}
             </span>

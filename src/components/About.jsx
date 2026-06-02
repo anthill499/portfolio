@@ -1,41 +1,292 @@
+import { useState, useEffect, useCallback } from "react";
 import { FadeInSection } from "./FadeInSection";
 import { chipColors } from "../utils/colors";
+import headshot from "../assets/headshot.JPG";
+
+// ─── Overlay detail data ───────────────────────────────────────────────────────
+
+const spotsDetail = [
+  {
+    category: "Korean BBQ", color: "orange",
+    spots: [
+      { name: "Wonderpig BBQ",  location: "Flushing, Queens",  rating: 5.0, note: "Best unlimited KBBQ in NYC. The pork belly and marinated short rib are legitimately unreal." },
+      { name: "Jongro BBQ",     location: "Midtown, Manhattan", rating: 4.5, note: "Great quality cuts and solid service. Worth the walk-in wait on weekends." },
+      { name: "Hanjoo",         location: "Flushing, Queens",  rating: 4.3, note: "Solid backup when Wonderpig is packed. Good value for the area." },
+    ],
+  },
+  {
+    category: "Pizza", color: "red",
+    spots: [
+      { name: "L'industrie Pizzeria", location: "Williamsburg, Brooklyn",  rating: 5.0, note: "The burrata slice is a top-3 pizza moment of my life. Non-negotiable." },
+      { name: "Joe's Pizza",          location: "West Village, Manhattan", rating: 4.8, note: "Classic NY slice. Required stop for any visitor." },
+      { name: "Prince Street Pizza",  location: "Nolita, Manhattan",       rating: 4.6, note: "The pepperoni square is dangerous in the best way." },
+    ],
+  },
+  {
+    category: "Bakery / Café", color: "brown",
+    spots: [
+      { name: "Cafe W",              location: "Flushing, Queens",           rating: 4.7, note: "Excellent matcha drinks and solid pastries. Great vibe for working." },
+      { name: "Supermoon Bakehouse", location: "Lower East Side, Manhattan", rating: 4.6, note: "The croissants are legitimately life-changing. Go early or miss out." },
+    ],
+  },
+  {
+    category: "Skewers", color: "brown",
+    spots: [
+      { name: "Ganblaze", location: "Flushing, Queens", rating: 4.8, note: "Go for the wagyu skewers and the corn. Perfect for a group." },
+    ],
+  },
+];
+
+const activitiesDetail = [
+  { label: "Rock Climbing",    color: "blue",   emoji: "🧗",  details: ["Currently V4–V5 boulderer, working toward V6", "Home gym: Cliffs of Id, Long Island City", "Started in 2022 and completely got hooked", "Love the problem-solving aspect as much as the physical challenge"] },
+  { label: "Music Production", color: "purple", emoji: "🎛️", details: ["DAW: Ableton Live", "Genres: lo-fi, R&B, ambient", "Been producing on and off since 2019", "Currently working on a small EP"] },
+  { label: "Beli App",         color: "orange", emoji: "📍",  details: ["My go-to app for tracking every restaurant visit", "100+ spots logged across NYC", "Queens is criminally underrated for food", "Beli score: 8.2 — selective eater 😅"] },
+  { label: "Coffee Hunting",   color: "brown",  emoji: "☕",  details: ["Third-wave coffee enthusiast", "Current favorite: Sey Coffee, Bushwick", "I judge a city by its pour-overs", "Espresso snob — will never fully admit it"] },
+  { label: "Hiking",           color: "green",  emoji: "🥾",  details: ["Catskills regular: Slide Mountain, Giant Ledge, Hunter Mountain", "Usually go with a group, sometimes solo", "Planning: Adirondacks High Peaks next", "The post-hike meal always hits different"] },
+  { label: "Reading",          color: "indigo", emoji: "📚",  details: ["Mix of technical, philosophy, and fiction", "Recent favorites: SICP, Dune, Atomic Habits", "Currently: The Pragmatic Programmer", "Goal: 24 books this year"] },
+];
+
+const currentlyDetail = [
+  { label: "Reading",   value: "The Pragmatic Programmer", emoji: "📖", color: "indigo", detail: "By David Thomas & Andrew Hunt. A timeless guide to software craftsmanship — currently in Chapter 5, 'Bend or Break'.", meta: "Started Dec 2025" },
+  { label: "Listening", value: "Frank Ocean",              emoji: "🎵", color: "purple", detail: "Deep in the Blonde / Channel Orange era. Also cycling through SZA, Kendrick, and Tyler the Creator.", meta: "On rotation since forever" },
+  { label: "Making",    value: "Music & side projects",    emoji: "🎛️", color: "blue",   detail: "Working on a lo-fi EP in Ableton. Also building small tools and experimenting with AI APIs on the side.", meta: "Ongoing" },
+  { label: "Eating",    value: "Logging spots on Beli",    emoji: "🍜", color: "orange", detail: "Currently hunting for the best ramen in Queens. Recent find: Ganblaze for skewers in Flushing.", meta: "The hunt never ends" },
+];
+
+// ─── Panel content registry ───────────────────────────────────────────────────
+
+function Rating({ rating }) {
+  return (
+    <span className="flex items-center gap-1">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+      <span className="text-[11px] font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] tabular-nums">
+        {rating.toFixed(1)}
+      </span>
+    </span>
+  );
+}
+
+const PANEL_CONTENT = {
+  spots: {
+    emoji: "🍽️", title: "Favorite Spots",
+    render: () => (
+      <div className="space-y-8">
+        {spotsDetail.map((cat) => (
+          <div key={cat.category}>
+            <div className="mb-3">
+              <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${chipColors[cat.color]}`}>
+                {cat.category}
+              </span>
+            </div>
+            <div className="space-y-2.5">
+              {cat.spots.map((spot) => (
+                <div key={spot.name}
+                  className="rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#ffffff] dark:bg-[#242424] px-4 py-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="font-semibold text-sm text-[#191919] dark:text-[#F7F6F3] leading-snug">{spot.name}</p>
+                    <Rating rating={spot.rating} />
+                  </div>
+                  <p className="text-[11px] text-[#9B9B9B] mt-0.5">{spot.location}</p>
+                  <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B] mt-2 leading-relaxed">{spot.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+
+  activities: {
+    emoji: "⚡", title: "Things I Do",
+    render: () => (
+      <div className="space-y-4">
+        {activitiesDetail.map((item) => (
+          <div key={item.label}
+            className="rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#ffffff] dark:bg-[#242424] px-4 py-4">
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="text-xl leading-none">{item.emoji}</span>
+              <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${chipColors[item.color]}`}>{item.label}</span>
+            </div>
+            <ul className="space-y-2">
+              {item.details.map((d, i) => (
+                <li key={i} className="flex items-start gap-2.5">
+                  <span className="mt-[7px] w-1 h-1 rounded-full bg-[#7C3AED] dark:bg-[#A78BFA] flex-shrink-0" />
+                  <span className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B] leading-relaxed">{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+
+  currently: {
+    emoji: "✦", title: "Currently",
+    render: () => (
+      <div className="space-y-4">
+        {currentlyDetail.map((item) => (
+          <div key={item.label}
+            className="rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#ffffff] dark:bg-[#242424] px-4 py-4">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl leading-none mt-0.5">{item.emoji}</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 flex-wrap mb-2">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#7C3AED] dark:text-[#A78BFA]">{item.label}</span>
+                  <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${chipColors[item.color]}`}>{item.value}</span>
+                </div>
+                <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B] leading-relaxed">{item.detail}</p>
+                <p className="text-[11px] text-[#9B9B9B] dark:text-[#6B6B6B] mt-2 italic">{item.meta}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+};
+
+// ─── Full-screen panel ────────────────────────────────────────────────────────
+
+function Panel({ id, isOpen, onClose }) {
+  const { emoji, title, render } = PANEL_CONTENT[id];
+
+  // Escape key — only active while open
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [isOpen, onClose]);
+
+  return (
+    <div
+      className={`fixed inset-0 z-[70] flex flex-col bg-[#f6f5f4] dark:bg-[#191919] transition-opacity duration-300 ease-out ${
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      {/* Sticky header */}
+      <div className="sticky top-0 z-10 shrink-0 flex items-center gap-3 px-6 py-4 border-b border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#f6f5f4]/95 dark:bg-[#191919]/95 backdrop-blur-sm">
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="p-1.5 rounded-md text-[#9B9B9B] hover:text-[#191919] dark:hover:text-[#F7F6F3] hover:bg-[#edecea] dark:hover:bg-[#2a2a2a] transition-colors"
+        >
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </button>
+        <div className="h-4 w-px bg-[#E9E9E7] dark:bg-[#2A2A2A]" />
+        <span className="text-base leading-none">{emoji}</span>
+        <span className="text-[10px] uppercase tracking-widest text-[#9B9B9B] font-semibold">{title}</span>
+      </div>
+
+      {/* Scrollable body — content capped at readable width */}
+      <div className="flex-1 overflow-y-auto scrollbar-hide">
+        <div className="max-w-2xl mx-auto px-6 py-8">
+          {render()}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Card button ──────────────────────────────────────────────────────────────
+
+function CardButton({ emoji, label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="group w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg border border-[#E9E9E7] dark:border-[#3A3A3A] bg-[#ffffff]/70 dark:bg-[#242424]/70 backdrop-blur-md hover:border-[#7C3AED]/35 dark:hover:border-[#A78BFA]/25 hover:bg-[#ffffff]/90 dark:hover:bg-[#2a2a2a]/90 transition-all duration-200"
+    >
+      <span className="text-sm leading-none select-none">{emoji}</span>
+      <span className="text-xs font-medium text-[#6B6B6B] dark:text-[#9B9B9B] group-hover:text-[#191919] dark:group-hover:text-[#F7F6F3] transition-colors duration-200">
+        {label}
+      </span>
+    </button>
+  );
+}
+
+// ─── Section ──────────────────────────────────────────────────────────────────
 
 export function About() {
-  return (
-    <section
-      id="about"
-      className="snap-start min-h-screen flex items-center justify-center bg-[#F7F6F3] dark:bg-[#242424] px-8 py-24"
-    >
-      <div className="max-w-3xl w-full mx-auto">
-        <FadeInSection>
-          <div className="flex items-center gap-2 mb-5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-[#7C3AED] dark:bg-[#A78BFA]" />
-            <span className="text-xs uppercase tracking-widest text-[#7C3AED] dark:text-[#A78BFA] font-medium">
-              About
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-[#191919] dark:text-[#F7F6F3]">
-            A bit about me
-          </h2>
-        </FadeInSection>
+  const [activePanel, setActivePanel] = useState(null); // which content to render
+  const [panelOpen,   setPanelOpen]   = useState(false); // drives the CSS transition
 
-        <FadeInSection delay={100}>
-          <div className="mt-8 space-y-4 border-l-2 border-[#E9E9E7] dark:border-[#3A3A3A] pl-6">
-            <p className="text-base leading-relaxed text-[#6B6B6B] dark:text-[#9B9B9B]">
-              I'm a software engineer who loves crafting clean, performant
-              applications. My background spans full-stack web development,
-              distributed systems, and developer tooling. I care deeply about
-              code quality, user experience, and shipping products that matter.
-            </p>
-            <p className="text-base leading-relaxed text-[#6B6B6B] dark:text-[#9B9B9B]">
-              When I'm not coding, you'll find me reading about systems design,
-              experimenting with new technologies, or enjoying a strong cup of
-              coffee.
-            </p>
-          </div>
-        </FadeInSection>
-      </div>
-    </section>
+  const open = useCallback((id) => {
+    setActivePanel(id);                          // mount with correct content
+    requestAnimationFrame(() =>                  // let the DOM paint first
+      requestAnimationFrame(() => setPanelOpen(true))
+    );
+  }, []);
+
+  const close = useCallback(() => {
+    setPanelOpen(false);                         // start fade-out
+    setTimeout(() => setActivePanel(null), 300); // unmount only after transition ends
+  }, []);
+
+  return (
+    <>
+      <section
+        id="about"
+        className="snap-start min-h-screen flex items-center justify-center bg-[#f6f5f4] dark:bg-[#191919] px-4 sm:px-8 py-20 sm:py-24 relative overflow-hidden"
+      >
+        <img
+          src={headshot}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-[0.18] dark:opacity-[0.12] select-none pointer-events-none"
+        />
+
+        <div className="max-w-3xl w-full mx-auto relative z-10">
+          {/* Section label */}
+          <FadeInSection>
+            <div className="flex items-center gap-2 mb-5">
+              <span className="w-2.5 h-2.5 rounded-sm bg-[#7C3AED] dark:bg-[#A78BFA]" />
+              <span className="text-xs uppercase tracking-widest text-[#7C3AED] dark:text-[#A78BFA] font-medium">
+                About
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-[#191919] dark:text-[#F7F6F3]">
+              A bit about me
+            </h2>
+          </FadeInSection>
+
+          {/* Two-column: bio left, buttons right */}
+          <FadeInSection delay={100}>
+            <div className="mt-8 md:grid md:grid-cols-[1fr_200px] md:gap-12 md:items-center">
+
+              {/* Bio */}
+              <div className="space-y-4 border-l-2 border-[#E9E9E7] dark:border-[#3A3A3A] pl-6">
+                <p className="text-base leading-relaxed text-[#6B6B6B] dark:text-[#9B9B9B]">
+                  I'm a software engineer who loves crafting clean, performant
+                  applications. My background spans full-stack web development,
+                  distributed systems, and developer tooling. I care deeply about
+                  code quality, user experience, and shipping products that matter.
+                </p>
+                <p className="text-base leading-relaxed text-[#6B6B6B] dark:text-[#9B9B9B]">
+                  When I'm not coding, you'll find me reading about systems design,
+                  experimenting with new technologies, or enjoying a strong cup of
+                  coffee.
+                </p>
+              </div>
+
+              {/* Buttons — vertical stack */}
+              <div className="mt-6 md:mt-0 flex flex-col gap-2.5">
+                <CardButton emoji="🍽️" label="Favorite Spots" onClick={() => open("spots")}      />
+                <CardButton emoji="⚡"  label="Things I Do"    onClick={() => open("activities")}  />
+                <CardButton emoji="✦"  label="Currently"      onClick={() => open("currently")}   />
+              </div>
+
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+
+      {activePanel && <Panel id={activePanel} isOpen={panelOpen} onClose={close} />}
+    </>
   );
 }

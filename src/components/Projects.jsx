@@ -38,7 +38,7 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="snap-start min-h-screen flex items-center justify-center bg-[#F7F6F3] dark:bg-[#242424] px-8 py-24"
+      className="snap-start min-h-screen flex items-center justify-center bg-[#f6f5f4] dark:bg-[#191919] px-4 sm:px-8 py-20 sm:py-24"
     >
       <div className="max-w-4xl w-full mx-auto">
         <FadeInSection>

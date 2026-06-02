@@ -165,9 +165,9 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="snap-start dot-grid relative min-h-screen flex flex-col justify-center bg-white dark:bg-[#191919] overflow-hidden"
+      className="snap-start dot-grid relative min-h-screen flex flex-col justify-center bg-[#f6f5f4] dark:bg-[#191919] overflow-hidden"
     >
-      <div className="max-w-4xl mx-auto px-8 py-32 w-full">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 py-24 sm:py-32 w-full">
         <FadeInSection>
           <div className="text-5xl mb-8 select-none">👋</div>
           <h1 className="text-[2.5rem] md:text-[3.75rem] lg:text-[4.5rem] font-black tracking-[-0.04em] leading-[0.9] text-[#191919] dark:text-[#F7F6F3]">

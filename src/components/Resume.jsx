@@ -101,7 +101,7 @@ function RoleEntry({ role }) {
           {role.role}
         </p>
         <span
-          className={`px-2 py-0.5 rounded-full text-xs font-medium ${tagColors[role.tag.color]}`}
+          className={`px-2 py-0.5 rounded-md text-xs font-medium ${tagColors[role.tag.color]}`}
         >
           {role.tag.label}
         </span>
@@ -125,7 +125,7 @@ function RoleEntry({ role }) {
         {role.skills.map((skill) => (
           <span
             key={skill.label}
-            className={`px-2 py-0.5 rounded-full text-xs font-medium ${chipColors[skill.color]}`}
+            className={`px-2 py-0.5 rounded-md text-xs font-medium ${chipColors[skill.color]}`}
           >
             {skill.label}
           </span>
@@ -139,7 +139,7 @@ export function Resume() {
   return (
     <section
       id="resume"
-      className="snap-start min-h-screen flex items-center justify-center bg-white dark:bg-[#191919] px-8 py-14"
+      className="snap-start min-h-screen flex items-center justify-center bg-[#f6f5f4] dark:bg-[#191919] px-8 py-14"
     >
       <div className="max-w-3xl w-full mx-auto">
         <FadeInSection>
@@ -172,7 +172,7 @@ export function Resume() {
               </p>
               <div className="space-y-5">
                 {experience.map((item, i) => (
-                  <div key={i} className="rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#F7F6F3] dark:bg-[#1E1E1E] p-4">
+                  <div key={i} className="rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#ffffff] dark:bg-[#242424] p-4">
                     <p className="text-sm font-semibold text-[#191919] dark:text-[#F7F6F3]">
                       {item.company}
                       {item.companyDesc && (
@@ -193,7 +193,7 @@ export function Resume() {
                       <div className="mt-2.5 relative border-l-2 border-[#E9E9E7] dark:border-[#2A2A2A] ml-1">
                         {item.roles.map((role, j) => (
                           <div key={j} className="relative pl-5 pb-4 last:pb-0">
-                            <span className="absolute -left-[5px] top-[5px] w-2.5 h-2.5 rounded-full border-2 border-[#7C3AED] dark:border-[#A78BFA] bg-[#F7F6F3] dark:bg-[#1E1E1E]" />
+                            <span className="absolute -left-[5px] top-[5px] w-2.5 h-2.5 rounded-full border-2 border-[#7C3AED] dark:border-[#A78BFA] bg-[#ffffff] dark:bg-[#242424]" />
                             <RoleEntry role={role} />
                           </div>
                         ))}
@@ -214,7 +214,7 @@ export function Resume() {
                 {education.map((item, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-[1fr_auto] gap-4 items-start rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#F7F6F3] dark:bg-[#1E1E1E] p-4"
+                    className="grid grid-cols-[1fr_auto] gap-4 items-start rounded-xl border border-[#E9E9E7] dark:border-[#2A2A2A] bg-[#ffffff] dark:bg-[#242424] p-4"
                   >
                     <div>
                       <p className="text-sm font-semibold text-[#191919] dark:text-[#F7F6F3]">
