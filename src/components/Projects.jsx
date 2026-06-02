@@ -1,38 +1,34 @@
-import { FadeInSection } from './FadeInSection'
-import { ProjectCard } from './ProjectCard'
+import { FadeInSection } from "./FadeInSection";
+import { ProjectCard } from "./ProjectCard";
 
 const projects = [
   {
-    title: 'Project Alpha',
+    title: "Picky Eater",
     description:
-      'A full-stack web app for real-time team collaboration. Concurrent editing and instant sync across all connected clients.',
-    techStack: ['React', 'Node.js', 'WebSockets', 'PostgreSQL'],
-    githubUrl: '#',
-    demoUrl: '#',
-    emoji: '🚀',
-    headerColor: 'violet',
+      "A full-stack web app for real-time private-session restaurant selection to decide where to eat",
+    techStack: [
+      "React",
+      "Express/Node.js",
+      "Socket.IO/WebSockets",
+      "PostgreSQL",
+      "Google Places API",
+    ],
+    githubUrl: "#",
+    demoUrl: "#",
+    emoji: "🍜",
+    headerColor: "violet",
   },
   {
-    title: 'Project Beta',
+    title: "Manazon",
     description:
-      'A CLI tool that automates repetitive dev tasks and scaffolds new projects from custom templates with a single command.',
-    techStack: ['Python', 'Click', 'Jinja2'],
-    githubUrl: '#',
-    demoUrl: '#',
-    emoji: '⚡',
-    headerColor: 'teal',
+      "A full-stack web application clone of Amazon; the world's largest online marketplace",
+    techStack: ["React", "Ruby on Rails", "PostgreSQL"],
+    githubUrl: "#",
+    demoUrl: "#",
+    emoji: "🛍️",
+    headerColor: "teal",
   },
-  {
-    title: 'Project Gamma',
-    description:
-      'A streaming metrics dashboard with real-time charts, histograms, and configurable alerts for production systems.',
-    techStack: ['TypeScript', 'D3.js', 'Redis', 'Docker'],
-    githubUrl: '#',
-    demoUrl: '#',
-    emoji: '📊',
-    headerColor: 'amber',
-  },
-]
+];
 
 export function Projects() {
   return (
@@ -62,5 +58,5 @@ export function Projects() {
         </div>
       </div>
     </section>
-  )
+  );
 }
