@@ -2,16 +2,16 @@ import { chipColors, techColorMap } from '../utils/colors'
 
 const accentStyles = {
   violet: {
-    stripe:  'bg-[#7C3AED]',
-    iconBox: 'bg-[#F5F3FF] dark:bg-[#2D1B69]',
+    gradient: 'from-[#6D28D9] to-[#3B0764]',
+    button:   'bg-[#7C3AED] hover:bg-[#6D28D9]',
   },
   teal: {
-    stripe:  'bg-[#0D9488]',
-    iconBox: 'bg-[#F0FDFA] dark:bg-[#042F2E]',
+    gradient: 'from-[#0D9488] to-[#134E4A]',
+    button:   'bg-[#0D9488] hover:bg-[#0F766E]',
   },
   amber: {
-    stripe:  'bg-[#D97706]',
-    iconBox: 'bg-[#FFFBEB] dark:bg-[#451A03]',
+    gradient: 'from-[#D97706] to-[#78350F]',
+    button:   'bg-[#D97706] hover:bg-[#B45309]',
   },
 }
 
@@ -19,21 +19,22 @@ export function ProjectCard({ title, description, techStack, githubUrl, demoUrl,
   const accent = accentStyles[headerColor] ?? accentStyles.violet
 
   return (
-    <div className="border border-[#E9E9E7] dark:border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col bg-[#ffffff] dark:bg-[#242424] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 h-full">
-      {/* Thin accent stripe */}
-      <div className={`h-[3px] w-full ${accent.stripe}`} />
+    <div className="group border border-[#E9E9E7] dark:border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col bg-[#ffffff] dark:bg-[#242424] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
 
-      <div className="p-6 flex flex-col gap-5 flex-1">
-        {/* Emoji icon */}
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl select-none ${accent.iconBox}`}>
-          {emoji}
-        </div>
+      {/* Gradient header with dot-grid overlay and large emoji */}
+      <div className={`relative bg-gradient-to-br ${accent.gradient} h-36 shrink-0 flex items-center justify-center overflow-hidden`}>
+        <div
+          className="absolute inset-0 opacity-[0.12]"
+          style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '18px 18px' }}
+        />
+        <span className="relative text-5xl select-none">{emoji}</span>
+      </div>
 
+      {/* Card body */}
+      <div className="p-6 flex flex-col gap-4 flex-1">
         <div className="flex-1">
-          <h3 className="font-bold text-[#191919] dark:text-[#F7F6F3] text-base leading-snug">{title}</h3>
-          <p className="mt-2 text-sm text-[#6B6B6B] dark:text-[#9B9B9B] leading-relaxed">
-            {description}
-          </p>
+          <h3 className="font-bold text-[#191919] dark:text-[#F7F6F3] text-lg leading-snug">{title}</h3>
+          <p className="mt-2 text-sm text-[#6B6B6B] dark:text-[#9B9B9B] leading-relaxed">{description}</p>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
@@ -47,12 +48,13 @@ export function ProjectCard({ title, description, techStack, githubUrl, demoUrl,
           ))}
         </div>
 
-        <div className="flex gap-4 pt-3 border-t border-[#E9E9E7] dark:border-[#2A2A2A] mt-auto">
+        {/* CTA buttons */}
+        <div className="flex gap-2.5 mt-auto pt-4 border-t border-[#E9E9E7] dark:border-[#2A2A2A]">
           <a
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-[#6B6B6B] dark:text-[#9B9B9B] hover:text-[#191919] dark:hover:text-[#F7F6F3] transition-colors"
+            className="flex-1 text-center py-2 rounded-lg border border-[#E9E9E7] dark:border-[#2A2A2A] text-sm font-medium text-[#6B6B6B] dark:text-[#9B9B9B] hover:border-[#7C3AED] dark:hover:border-[#A78BFA] hover:text-[#7C3AED] dark:hover:text-[#A78BFA] transition-colors"
           >
             GitHub ↗
           </a>
@@ -60,7 +62,7 @@ export function ProjectCard({ title, description, techStack, githubUrl, demoUrl,
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-[#6B6B6B] dark:text-[#9B9B9B] hover:text-[#191919] dark:hover:text-[#F7F6F3] transition-colors"
+            className={`flex-1 text-center py-2 rounded-lg text-sm font-semibold text-white transition-colors ${accent.button}`}
           >
             Live Demo ↗
           </a>

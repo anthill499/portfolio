@@ -2,15 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anthony Huang</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
+    <link rel="apple-touch-icon" href="/portfolio/favicon.svg" />
+
+    <!-- Primary metadata -->
+    <title>Anthony Huang — Software Engineer</title>
+    <meta name="description" content="Software engineer based in New York. Full-stack development, distributed systems, and developer tooling." />
+    <meta name="author" content="Anthony Huang" />
+    <meta name="theme-color" content="#7C3AED" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anthony Huang — Software Engineer" />
+    <meta property="og:description" content="Software engineer based in New York. Full-stack development, distributed systems, and developer tooling." />
+    <meta property="og:url" content="https://anthill499.github.io/portfolio/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Anthony Huang — Software Engineer" />
+    <meta name="twitter:description" content="Software engineer based in New York. Full-stack development, distributed systems, and developer tooling." />
+
+    <!-- Dark mode: apply class before first paint to prevent flash -->
     <script>
       (function () {
         var stored = localStorage.getItem("theme");
-        var prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         if (stored === "dark" || (!stored && prefersDark)) {
           document.documentElement.classList.add("dark");
         }

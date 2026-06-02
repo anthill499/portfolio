@@ -49,7 +49,7 @@ export function Projects() {
           </h2>
         </FadeInSection>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl">
           {projects.map((project, i) => (
             <FadeInSection key={project.title} delay={i * 100}>
               <ProjectCard {...project} />
